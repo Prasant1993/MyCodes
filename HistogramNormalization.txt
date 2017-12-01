@@ -1,0 +1,45 @@
+Method 1:
+
+
+*******************Different ways to normalize the histogram*********************************
+
+
+Double_t num = h->GetBinContent(i);
+Double_t den = h->GetBinWidth(i);
+Double_t value = 0;
+if (den!=0)
+  {
+     value = num/den;
+     h->SetBinContent(i,value);
+  }
+
+Method 2:
+
+Double_t norm = h->GetEntries();
+h->Scale(1/norm);
+
+Method 3:
+
+Double_t scale = h->GetXaxis()->GetBinWidth(1)/(h->GetIntegral());
+h->Scale(scale);
+
+Method 4:
+
+Double_t norm = 1;
+Double_t scale = norm/(h->Integral());
+h->Scale(scale);
+
+Method 5:
+
+Double_t norm = 1;
+h->Scale(norm, "width");
+
+Method 6:
+
+Double_t norm = 1;
+h->Scale(norm/h->Integral(), "width");
+
+Method 7:
+
+Double_t norm = 1;
+h->Scale(norm/h->Integral("width"));
